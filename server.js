@@ -25,7 +25,7 @@ var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
 // Local database URI.
-const LOCAL_DATABASE = "mongodb+srv://benjamin:benjamin123@cluster0.mquyq.mongodb.net/tcsdb?retryWrites=true&w=majority";
+const LOCAL_DATABASE = "mongodb+srv://benjamin:benjamin123@cluster0.mquyq.mongodb.net/Fashionista?retryWrites=true&w=majority";
 // Local port.
 const LOCAL_PORT = 8080;
 
