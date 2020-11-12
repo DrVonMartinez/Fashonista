@@ -7,12 +7,16 @@ import { HttpModule } from '@angular/http';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ProductCreateComponent } from './product/product-create/product-create.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AdminComponent } from './user/admin/admin.component';
+import { UserComponent } from './user/user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
-    ProductCreateComponent
+    ProductCreateComponent,
+    AdminComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
