@@ -1,1 +1,14 @@
-<p>admin works!</p>
+<div class="container row" *ngIf="admin.page === 'product'">
+    <div class="col-md-6">
+        <app-product-list [productToDisplay]="createdProduct"></app-product-list>
+    </div>
+    <div class="col-md-6">
+        <app-product-create (createdProduct)="onCreatedProduct($event)"></app-product-create>
+    </div>
+</div>
+
+<div class="container row" *ngIf="admin.page === 'user'">
+    <div class="col-md-12">
+        <app-user-list [userToDisplay]="activeUsers"></app-user-list>
+    </div>
+</div>

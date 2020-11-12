@@ -8,7 +8,8 @@ import { ProductListComponent } from './product/product-list/product-list.compon
 import { ProductCreateComponent } from './product/product-create/product-create.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdminComponent } from './admin/admin.component';
-import { UserComponent } from './user/user.component';
+import { UserComponent } from './user/user/user.component';
+import { UserListComponent } from './user/user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { UserComponent } from './user/user.component';
     ProductListComponent,
     ProductCreateComponent,
     AdminComponent,
-    UserComponent
+    UserComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
