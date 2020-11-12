@@ -9,7 +9,7 @@ import { isPromise } from '@angular/compiler/src/util';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'node-express-angular';
+  title = 'Fashionista';
   status = 'DOWN';
   createdProduct: IProduct = null;
 
