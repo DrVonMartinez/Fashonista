@@ -13,39 +13,22 @@ export class UserComponent implements OnInit {
 
   page = 'login'
   user: User;
-  username: string = '';
-  password: string = '';
-  userLoginForm: FormGroup;
-  userSignupForm: FormGroup;
-  shoppingcart: Array<IProduct>;
+  shoppingcart: Array<IProduct> = [];
   error: boolean = false;
 
-  @Output() addedUser = new EventEmitter<IUser>();
   @Output() loggedInUser = new EventEmitter<IUser>();
   constructor(protected userService: UserService, protected formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.initLoginForm();
-    this.initSignupForm();
   }
 
   loadProducts() {
     console.log('loading products')
   }
 
-  onLogin() {
-    const user = new User(
-      this.userLoginForm.value['name'],
-      this.userLoginForm.value['password'],
-      null);
-    this.userService.login(user).then((result: IUser) => {
-      if (result === undefined) {
-        this.error = true;
-      } else {
-        this.error = false;
-        this.loggedInUser.emit(result);
-      }
-    });
+  // Hide the error message.
+  hideError() {
+    this.error = false;
   }
 
   logout(){
@@ -55,40 +38,9 @@ export class UserComponent implements OnInit {
     }
   }
 
-  // Manage the submit action and create the new product.
-  onSignup() {
-    const user = new User(
-      this.userSignupForm.value['name'],
-      this.userSignupForm.value['password'],
-      null);
-    this.userService.create(user).then((result: IUser) => {
-      if (result === undefined) {
-        this.error = true;
-      } else {
-        this.error = false;
-        this.addedUser.emit(result);
-      }
-    });
+  onLogin(user: User){
+    this.user = user;
+    this.loggedInUser.emit(user);
   }
 
-  // Hide the error message.
-  hideError() {
-    this.error = false;
-  }
-
-  // Init the login form.
-  private initLoginForm() {
-    this.userLoginForm = new FormGroup({
-      name: new FormControl(this.username, Validators.required),
-      password: new FormControl(this.password, Validators.required),
-    });
-  }
-
-  // Init the sign-up form.
-  private initSignupForm() {
-    this.userSignupForm = new FormGroup({
-      name: new FormControl(this.username, Validators.required),
-      password: new FormControl(this.password, Validators.required),
-    });
-  }
 }

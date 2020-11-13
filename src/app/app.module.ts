@@ -11,6 +11,7 @@ import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user/user.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { ProductShoppingCartComponent } from './product/product-shoppingcart/product-shoppingcart.component';
+import { UserCreateComponent } from './user/user-create/user-create.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ProductShoppingCartComponent } from './product/product-shoppingcart/pro
     AdminComponent,
     UserComponent,
     UserListComponent,
-    ProductShoppingCartComponent
+    ProductShoppingCartComponent,
+    UserCreateComponent
   ],
   imports: [
     BrowserModule,

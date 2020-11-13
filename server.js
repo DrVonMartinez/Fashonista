@@ -9,6 +9,7 @@ var ObjectID = mongodb.ObjectID;
 var database;
 // The products collection
 var PRODUCTS_COLLECTION = "products";
+// The users collection
 var USER_COLLECTION = "users";
 
 // Create new instance of the express server
@@ -123,7 +124,7 @@ app.delete("/api/products/:id", function (req, res) {
  *  GET: finds all users
  */
 app.get("/api/user", function (req, res) {
-    database.collection(USER_COLLECTION).find({}).toArray(function (error, data) {
+    database.collection(USER_COLLECTION).find({role:'user'}).toArray(function (error, data) {
         if (error) {
             manageError(res, err.message, "Failed to get contacts.");
         } else {
@@ -171,11 +172,11 @@ app.delete("/api/user/:id", function (req, res) {
     }
 });
 
-/*  "/api/user"
- *  GET: finds all users
+/*  "/api/admin"
+ *  GET: finds all admins
  */
 app.get("/api/admin", function (req, res) {
-    database.collection(USER_COLLECTION).find({}).toArray(function (error, data) {
+    database.collection(USER_COLLECTION).find({role:'admin'}).toArray(function (error, data) {
         if (error) {
             manageError(res, err.message, "Failed to get contacts.");
         } else {
@@ -184,7 +185,7 @@ app.get("/api/admin", function (req, res) {
     });
 });
 
-/*  "/api/user"
+/*  "/api/admin"
  *   POST: adds a new admin
  */
 app.post("/api/admin", function (req, res) {
