@@ -171,6 +171,41 @@ app.delete("/api/user/:id", function (req, res) {
     }
 });
 
+/*  "/api/user"
+ *  GET: finds all users
+ */
+app.get("/api/admin", function (req, res) {
+    database.collection(USER_COLLECTION).find({}).toArray(function (error, data) {
+        if (error) {
+            manageError(res, err.message, "Failed to get contacts.");
+        } else {
+            res.status(200).json(data);
+        }
+    });
+});
+
+/*  "/api/user"
+ *   POST: adds a new admin
+ */
+app.post("/api/admin", function (req, res) {
+    var admin = req.body;
+    if (!admin.name) {
+        manageError(res, "Invalid admin input", "Name is mandatory.", 400);
+    }else if (!admin.password) {
+        manageError(res, "Invalid admin input", "Password is mandatory.", 400);
+    }else if (!admin.role) {
+        manageError(res, "Invalid admin input", "Role is mandatory.", 400);
+    }else {
+        database.collection(USER_COLLECTION).insertOne(user, function (err, doc) {
+            if (err) {
+                manageError(res, err.message, "Failed to add new admin.");
+            } else {
+                res.status(201).json(doc.ops[0]);
+            }
+        });
+    }
+});
+
 
 // Errors handler.
 function manageError(res, reason, message, code) {

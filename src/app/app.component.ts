@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   title = 'Fashionista';
   status = 'DOWN';
   createdProduct: IProduct = null;
-  addedUser: IUser;
+  addedUser: IUser = null;
 
   constructor(protected statusService: StatusService) { }
 
