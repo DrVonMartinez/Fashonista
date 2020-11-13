@@ -13,9 +13,9 @@ export class ProductCreateComponent implements OnInit {
   productForm: FormGroup;
   name: string = '';
   brand: string = '';
-  email: string = '';
+  image: string = '';
   price: string = '';
-  availibility: string = '';
+  category: string = '';
   error: boolean = false;
 
   @Output() createdProduct = new EventEmitter<IProduct>();
@@ -32,9 +32,9 @@ export class ProductCreateComponent implements OnInit {
     const product = new Product(
       this.productForm.value['name'],
       this.productForm.value['brand'],
-      this.productForm.value['email'],
+      this.productForm.value['image'],
       this.productForm.value['price'],
-      this.productForm.value['availibility'], 
+      this.productForm.value['category'], 
       null);
     this.productService.create(product).then((result: IProduct) => {
       if (result === undefined) {
@@ -56,9 +56,9 @@ export class ProductCreateComponent implements OnInit {
     this.productForm = new FormGroup({
       name: new FormControl(this.name, Validators.required),
       brand: new FormControl(this.brand, Validators.required),
-      email: new FormControl(this.email, Validators.required),
+      email: new FormControl(this.image, Validators.required),
       price: new FormControl(this.price, Validators.required),
-      availibility: new FormControl(this.availibility, Validators.required)
+      category: new FormControl(this.category, Validators.required)
     });
   }
 
