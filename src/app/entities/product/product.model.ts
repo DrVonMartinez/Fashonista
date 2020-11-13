@@ -8,16 +8,15 @@ export class Product implements IProduct {
   constructor(
     public name: string,
     public brand: string,
-    public email: string,
+    public image: string,
     public price: string,
-    public availibility: string,
+    public category: string,
     public _id?: string
   ) {
     this._id = _id ? _id : null;
     this.name = name;
     this.brand = brand;
-    this.email = email;
     this.price = price;
-    this.availibility = availibility;
+    this.category = category;
   }
 }

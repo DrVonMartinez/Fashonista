@@ -7,11 +7,19 @@ import { IUser, User, Admin } from './user.model';
 })
 export class UserService {
     private userUrl = '/api/user';
+    private adminUrl = '/api/admin';
 
     constructor(private http: Http) { }
 
+    getAdmin():Promise<Array<IUser>> {
+        return this.http.get(this.adminUrl)
+            .toPromise()
+            .then(response => response.json())
+            .catch(this.error);
+    }
+
     // Get users
-    get(): Promise<Array<IUser>> {
+    get():Promise<Array<IUser>> {
         return this.http.get(this.userUrl)
             .toPromise()
             .then(response => response.json())
@@ -27,7 +35,7 @@ export class UserService {
     }
 
     // Delete a user
-    delete(id: string): Promise<any> {
+    async delete(id: string): Promise<any> {
         return this.http.delete(`${this.userUrl}/${id}`)
             .toPromise()
             .then(response => response.json())

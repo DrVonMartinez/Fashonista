@@ -10,7 +10,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user/user.component';
 import { UserListComponent } from './user/user-list/user-list.component';
-import { ProductShoppingcartComponent } from './product/product-shoppingcart/product-shoppingcart.component';
+import { ProductShoppingCartComponent } from './product/product-shoppingcart/product-shoppingcart.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { ProductShoppingcartComponent } from './product/product-shoppingcart/pro
     AdminComponent,
     UserComponent,
     UserListComponent,
-    ProductShoppingcartComponent
+    ProductShoppingCartComponent
   ],
   imports: [
     BrowserModule,
