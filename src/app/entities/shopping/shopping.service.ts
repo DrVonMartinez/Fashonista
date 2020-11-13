@@ -34,6 +34,13 @@ export class ShoppingService {
             .catch(this.error);
     }
 
+    purchase(id: string): Promise<any> {
+        return this.http.delete(`${this.cartUrl}/${id}`)
+            .toPromise()
+            .then(response => response.json())
+            .catch(this.error);
+    }
+
     // Error handling
     private error(error: any) {
         let message = (error.message) ? error.message :

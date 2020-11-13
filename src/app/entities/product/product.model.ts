@@ -16,6 +16,7 @@ export class Product implements IProduct {
     this._id = _id ? _id : null;
     this.name = name;
     this.brand = brand;
+    this.image = image;
     this.price = price;
     this.category = category;
   }

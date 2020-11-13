@@ -11,12 +11,12 @@
 <div *ngIf="user">
     <div class="container row" *ngIf="page == 'shop'">
         <div class="col-md-6">
-            <app-product-list [productToDisplay]="getProducts()"></app-product-list>
+            <app-product-list [productToDisplay]="loadProducts()"></app-product-list>
         </div>
     </div>
     <div class="container row" *ngIf="page === 'checkout'">
         <div class="col-md-12"></div>
-        <app-product-shoppingcart [shoppingcart]="shoppingcart"></app-product-shoppingcart>
+        <app-product-shoppingcart [cartToDisplay]="shoppingcart"></app-product-shoppingcart>
     </div>
 </div>
 
