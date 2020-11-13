@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { UserService } from 'src/app/entities/user/user.service';
-import { IUser } from 'src/app/entities/user/user.model';
+import { Admin, IUser, User } from 'src/app/entities/user/user.model';
 
 @Component({
   selector: 'app-user-list',
@@ -9,7 +9,8 @@ import { IUser } from 'src/app/entities/user/user.model';
 })
 export class UserListComponent implements OnInit, OnChanges {
 
-  users: Array<IUser> = [];
+  users: Array<User> = [];
+  admins: Array<Admin> = [];
   @Input() userToDisplay: IUser = null;
 
   constructor(protected userService: UserService) { }
@@ -22,7 +23,22 @@ export class UserListComponent implements OnInit, OnChanges {
   // If new user created, we add it to the list.
   ngOnChanges(): void {
     if (this.userToDisplay !== null) {
-      this.users.push(this.userToDisplay);
+      if (this.userToDisplay.role === 'user'){
+        this.users.push(new User(
+          this.userToDisplay.name,
+          this.userToDisplay.password,
+          [],
+          this.userToDisplay._id
+          ));
+      }
+      else if (this.userToDisplay.role === 'admin'){
+        this.admins.push(new Admin(
+          this.userToDisplay.name,
+          this.userToDisplay.password,
+          this.userToDisplay._id
+          ));
+      }
+        
     }
   }
 
@@ -33,14 +49,13 @@ export class UserListComponent implements OnInit, OnChanges {
 
   // Load all users.
   private loadAll() {
-    this.userService
-      .getAdmins()
-      .then((result: Array<IUser>) => {
+    this.userService.get()
+      .then((result: Array<User>) => {
         this.users = result;
       })
-    this.userService.get()
-      .then((result: Array<IUser>) => {
-        this.users.concat(result);
+    this.userService.getAdmins()
+      .then((result: Array<Admin>) => {
+        this.admins = result;
       });
   }
 

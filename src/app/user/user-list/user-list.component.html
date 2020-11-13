@@ -1,5 +1,21 @@
 <h4>Users:</h4>
 
+<table *ngIf="admins.length > 0" class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of admins">
+            <td>{{ user.name }}</td>
+            <td>{{ user.role }}</td>
+        </tr>
+    </tbody>
+</table>
+
 <table *ngIf="users.length > 0" class="table">
     <thead>
         <tr>
@@ -12,12 +28,12 @@
         <tr *ngFor="let user of users">
             <td>{{ user.name }}</td>
             <td>{{ user.role }}</td>
-            <td *ngIf='user.role != "admin"'> <a class="delete" (click)="delete(user._id)">Delete</a> </td>
+            <td> <a class="delete" (click)="delete(user._id)">Delete</a> </td>
         </tr>
     </tbody>
 </table>
 
-<div *ngIf="users.length === 0" class="alert alert-info" role="info">
+<div *ngIf="admins.length === 0 && users.length === 0" class="alert alert-info" role="info">
     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
     <span class="sr-only">Information:</span>
     The user collection is empty.
