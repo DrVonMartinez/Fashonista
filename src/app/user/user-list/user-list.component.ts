@@ -34,9 +34,13 @@ export class UserListComponent implements OnInit, OnChanges {
   // Load all users.
   private loadAll() {
     this.userService
-      .get()
+      .getAdmins()
       .then((result: Array<IUser>) => {
         this.users = result;
+      })
+    this.userService.get()
+      .then((result: Array<IUser>) => {
+        this.users.concat(result);
       });
   }
 

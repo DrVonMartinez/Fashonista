@@ -14,7 +14,7 @@ export class UserService {
 
     constructor(private http: Http, private productService:ProductService) { }
 
-    getAdmin(): Promise<Array<IUser>> {
+    getAdmins(): Promise<Array<IUser>> {
         return this.http.get(this.adminUrl)
             .toPromise()
             .then(response => response.json())
@@ -50,6 +50,41 @@ export class UserService {
             .toPromise()
             .then(response => response.json())
             .catch(this.error);
+    }
+
+    getAdmin(id: string): Promise<User> {
+        return this.http.get(`${this.adminUrl}/${id}`)
+            .toPromise()
+            .then(response => response.json())
+            .catch(this.error);
+    }
+
+    async login(account: IUser): Promise<IUser> {
+        var find_account: IUser
+        if(account.role === 'admin'){
+            let accounts = await this.getAdmins()
+            accounts.forEach(function(admin){
+                let namecheck = admin.name === account.name;
+                let passwordcheck = admin.password === account.password;
+                if(namecheck && passwordcheck){
+                    find_account = admin;
+                }
+            })
+        }
+        else{
+            let accounts = await this.get()
+            accounts.forEach(function(user){
+                let namecheck = user.name === account.name;
+                let passwordcheck = user.password === account.password;
+                if(namecheck && passwordcheck){
+                    find_account = user;
+                }
+            })
+        }
+        return find_account;
+        
+        
+        
     }
 
     // Error handling

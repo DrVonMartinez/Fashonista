@@ -9,6 +9,7 @@ var ObjectID = mongodb.ObjectID;
 var database;
 // The products collection
 var PRODUCTS_COLLECTION = "products";
+var USER_COLLECTION = "users";
 
 // Create new instance of the express server
 var app = express();
@@ -84,7 +85,13 @@ app.post("/api/products", function (req, res) {
         manageError(res, "Invalid product input", "Name is mandatory.", 400);
     } else if (!product.brand) {
         manageError(res, "Invalid product input", "Brand is mandatory.", 400);
-    } else {
+    } else if (!product.image) {
+        manageError(res, "Invalid product input", "Image is mandatory.", 400);
+    }else if (!product.category) {
+        manageError(res, "Invalid product input", "Category is mandatory.", 400);
+    }else if (!product.price) {
+        manageError(res, "Invalid product input", "Price is mandatory.", 400);
+    }else {
         database.collection(PRODUCTS_COLLECTION).insertOne(product, function (err, doc) {
             if (err) {
                 manageError(res, err.message, "Failed to create new product.");
@@ -111,6 +118,59 @@ app.delete("/api/products/:id", function (req, res) {
         });
     }
 });
+
+/*  "/api/user"
+ *  GET: finds all users
+ */
+app.get("/api/user", function (req, res) {
+    database.collection(USER_COLLECTION).find({}).toArray(function (error, data) {
+        if (error) {
+            manageError(res, err.message, "Failed to get contacts.");
+        } else {
+            res.status(200).json(data);
+        }
+    });
+});
+
+/*  "/api/user"
+ *   POST: adds a new user
+ */
+app.post("/api/user", function (req, res) {
+    var user = req.body;
+    if (!user.name) {
+        manageError(res, "Invalid user input", "Name is mandatory.", 400);
+    }else if (!user.password) {
+        manageError(res, "Invalid user input", "Password is mandatory.", 400);
+    }else if (!user.role) {
+        manageError(res, "Invalid user input", "Role is mandatory.", 400);
+    }else {
+        database.collection(USER_COLLECTION).insertOne(user, function (err, doc) {
+            if (err) {
+                manageError(res, err.message, "Failed to add new user.");
+            } else {
+                res.status(201).json(doc.ops[0]);
+            }
+        });
+    }
+});
+
+/*  "/api/user/:id"
+ *   DELETE: deletes user by id
+ */
+app.delete("/api/user/:id", function (req, res) {
+    if (req.params.id.length > 24 || req.params.id.length < 24) {
+        manageError(res, "Invalid user id", "ID must be a single String of 12 bytes or a string of 24 hex characters.", 400);
+    } else {
+        database.collection(USER_COLLECTION).deleteOne({ _id: new ObjectID(req.params.id) }, function (err, result) {
+            if (err) {
+                manageError(res, err.message, "Failed to delete user.");
+            } else {
+                res.status(200).json(req.params.id);
+            }
+        });
+    }
+});
+
 
 // Errors handler.
 function manageError(res, reason, message, code) {

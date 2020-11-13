@@ -12,7 +12,7 @@
         <tr *ngFor="let user of users">
             <td>{{ user.name }}</td>
             <td>{{ user.role }}</td>
-            <td> <a class="delete" (click)="delete(user._id)">Delete</a> </td>
+            <td *ngIf='user.role != "admin"'> <a class="delete" (click)="delete(user._id)">Delete</a> </td>
         </tr>
     </tbody>
 </table>

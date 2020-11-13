@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { StatusService } from './shared/status.service';
 import { IProduct } from './entities/product/product.model';
 import { isPromise } from '@angular/compiler/src/util';
+import { IUser } from './entities/user/user.model';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ export class AppComponent implements OnInit {
   title = 'Fashionista';
   status = 'DOWN';
   createdProduct: IProduct = null;
+  addedUser: IUser;
 
   constructor(protected statusService: StatusService) { }
 
@@ -27,6 +29,12 @@ export class AppComponent implements OnInit {
   // Get the new product created.
   onCreatedProduct(createdProduct: IProduct) {
     this.createdProduct = createdProduct;
+    console.log(this.createdProduct)
+  }
+
+  onAddedUser(addedUser: IUser) {
+    this.addedUser = addedUser;
+    console.log(this.addedUser)
   }
 
 }

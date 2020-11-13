@@ -5,7 +5,6 @@
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Brand</th>
-            <th scope="col">Email</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -13,7 +12,6 @@
         <tr *ngFor="let product of products">
             <td>{{ product.name }}</td>
             <td>{{ product.brand }}</td>
-            <td>{{ product.email }}</td>
             <td> <a class="delete" (click)="delete(product._id)">Delete</a> </td>
         </tr>
     </tbody>
