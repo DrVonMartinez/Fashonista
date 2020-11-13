@@ -56,7 +56,7 @@ export class ProductCreateComponent implements OnInit {
     this.productForm = new FormGroup({
       name: new FormControl(this.name, Validators.required),
       brand: new FormControl(this.brand, Validators.required),
-      email: new FormControl(this.image, Validators.required),
+      image: new FormControl(this.image, Validators.required),
       price: new FormControl(this.price, Validators.required),
       category: new FormControl(this.category, Validators.required)
     });
