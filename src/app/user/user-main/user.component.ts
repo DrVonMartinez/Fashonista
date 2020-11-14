@@ -20,6 +20,7 @@ export class UserComponent implements OnInit {
   constructor(protected userService: UserService, protected formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.user = undefined
     this.page = 'login';
   }
 
@@ -41,7 +42,7 @@ export class UserComponent implements OnInit {
 
   onLogin(user: User){
     this.user = user;
-    this.page = 'products'
+    this.page = 'shop'
     this.loggedInUser.emit(user);
   }
 

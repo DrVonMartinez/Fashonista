@@ -1,5 +1,5 @@
-<div class="row text-right" *ngIf="user">
-    <div class="col-6">
+<div class="row" *ngIf="user">
+    <div class="col-6 text-right">
         <h2>User Portal</h2>
         <h3>Welcome {{user.name}}</h3>
         <button class="btn btn-warning" (click)="page = 'shop'">Shop</button>
@@ -7,16 +7,17 @@
         <button class="btn btn-danger" (click)="page = logout()">Logout</button>
     </div>
     <div class="container row" *ngIf="page == 'shop'">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <app-product-list [productToDisplay]="loadProducts()"></app-product-list>
         </div>
     </div>
     <div class="container row" *ngIf="page === 'checkout'">
-        <div class="col-md-12"></div>
-        <app-product-shoppingcart [cartToDisplay]="shoppingcart"></app-product-shoppingcart>
+        <div class="col-md-12">
+            <app-product-shoppingcart [cartToDisplay]="shoppingcart"></app-product-shoppingcart>
+        </div>
     </div>
 </div>
 
 <div *ngIf="!user">
-    <app-user-create (loggedInUser)=onLogin($event) ></app-user-create>
+    <app-user-create (loggedInUser)=onLogin($event)></app-user-create>
 </div>
