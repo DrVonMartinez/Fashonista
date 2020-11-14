@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { IProduct } from '../../entities/product/product.model';
 import { Admin, IUser } from '../../entities/user/user.model';
 import { UserService } from '../../entities/user/user.service';
@@ -12,11 +12,10 @@ export class AdminComponent implements OnInit {
   createdProduct: IProduct = null;
   addedUser: IUser = null;
   page:string;
-  //admin: Admin = ;
-  admin:any = true;
+  admin: Admin = null;
   error: boolean;
 
-  @Output() loggedInUser = new EventEmitter<IUser>();
+  loggedInUser = null;
   constructor(protected adminService: UserService) { }
 
   ngOnInit() {
@@ -38,7 +37,6 @@ export class AdminComponent implements OnInit {
   onLogin(user: Admin){
     this.admin = user;
     this.page = 'product';
-    this.loggedInUser.emit(user)
   }
 
   onAddedUser(user: IUser){

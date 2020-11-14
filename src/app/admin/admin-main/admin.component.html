@@ -1,29 +1,27 @@
 <div class="row" *ngIf="admin">
     <div class="col-6 text-right">
-        <h3>Admin Portal</h3>
+        <h2>Admin Portal</h2>
+        <h3>Welcome {{admin.name}}</h3>
     </div>
     <div class="col-6 text-right">
         <button class="btn btn-info" (click)="page = 'product'">Product</button>
         <button class="btn btn-info" (click)="page = 'user'">User</button>
         <button class="btn btn-danger" (click)="page = logout()">Logout</button>
     </div>
-    <div class="container row" *ngIf="page == 'product'">
-        <div class="col-md-6">
+    <div class="container" *ngIf="page == 'product'">
+        <div class="col-lg-6">
             <app-product-list [productToDisplay]="createdProduct"></app-product-list>
         </div>
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <app-product-create (createdProduct)="onCreatedProduct($event)"></app-product-create>
         </div>
     </div>
-    <div class="container row" *ngIf="page === 'user'">
-        <div class="col-md-12">
+    <div class="container" *ngIf="page === 'user'">
+        <div class="col-lg-12">
             <app-user-list (addedUser)="onAddedUser($event)"></app-user-list>
         </div>
     </div>
 </div>
 <div class="row" *ngIf="!admin">
-    <div class="col-6 text-right">
-        <h3>Admin Login</h3>
-    </div><br>
-    <app-admin-login (loggedInUser) = "onLogin($event)"></app-admin-login>
+    <app-admin-login (loggedInUser)="onLogin($event)"></app-admin-login>
 </div>
