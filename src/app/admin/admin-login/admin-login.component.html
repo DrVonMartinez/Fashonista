@@ -1,14 +1,14 @@
-<form class="form-horizontal" [formGroup]="adminLoginForm" (ngSubmit)="onSubmit()">
+<form class="form-horizontal" [formGroup]="adminLoginForm" (ngSubmit)="onLogin()">
     <div class="form-group">
-        <label for="username" class="col-sm-2 control-label">Username</label>
+        <label for="l_username" class="col-sm-2 control-label">Username</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="username" formControlName="username">
+            <input type="text" class="form-control" id="l_username" formControlName="l_username">
         </div>
     </div>
     <div class="form-group">
-        <label for="password" class="col-sm-2 control-label">Password</label>
+        <label for="l_password" class="col-sm-2 control-label">Password</label>
         <div class="col-sm-10">
-            <input type="password" class="form-control" id="password" formControlName="password">
+            <input type="password" class="form-control" id="l_password" formControlName="l_password">
         </div>
     </div>
     <div class="form-group">

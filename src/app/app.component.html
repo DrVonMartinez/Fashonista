@@ -308,13 +308,12 @@
 <div class="container row" *ngIf='status == "UP"'>
   <div *ngIf='page=="home"'>
     <p>Home</p>
-    <nav>
-
-    </nav>
-
   </div>
-  <div *ngIf='page=="admin"' class="horizontal-center vertical-center">
+  <div *ngIf='page=="admin"'>
     <app-admin></app-admin>
+  </div>
+  <div *ngIf='page=="user"'>
+    <app-user></app-user>
   </div>
   <div *ngIf='page=="other"'>
     <div class="col-lg-6">

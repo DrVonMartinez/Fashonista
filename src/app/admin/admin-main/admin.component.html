@@ -1,14 +1,12 @@
 <div class="row" *ngIf="admin">
-    <div class="col-6">
+    <div class="col-6 text-right">
         <h3>Admin Portal</h3>
     </div>
     <div class="col-6 text-right">
         <button class="btn btn-info" (click)="page = 'product'">Product</button>
         <button class="btn btn-info" (click)="page = 'user'">User</button>
-        <button class="btn btn-danger" (click)="page = 'login'; admin = null;">Logout</button>
+        <button class="btn btn-danger" (click)="page = logout()">Logout</button>
     </div>
-</div>
-<div *ngIf="admin">
     <div class="container row" *ngIf="page == 'product'">
         <div class="col-md-6">
             <app-product-list [productToDisplay]="createdProduct"></app-product-list>
@@ -19,10 +17,13 @@
     </div>
     <div class="container row" *ngIf="page === 'user'">
         <div class="col-md-12">
-            <app-user-list [userToDisplay]="users"></app-user-list>
+            <app-user-list (addedUser)="onAddedUser($event)"></app-user-list>
         </div>
     </div>
 </div>
-<div *ngIf="!admin">
-    <app-admin></app-admin>
+<div class="row" *ngIf="!admin">
+    <div class="col-6 text-right">
+        <h3>Admin Login</h3>
+    </div><br>
+    <app-admin-login (loggedInUser) = "onLogin($event)"></app-admin-login>
 </div>
