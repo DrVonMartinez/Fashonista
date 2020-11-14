@@ -18,7 +18,7 @@ export class UserCreateComponent implements OnInit {
   l_password: string = '';
   s_username: string = ''; 
   s_password: string = '';
-  error: boolean;
+  error: boolean = false;
   constructor(protected userService: UserService, protected formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class UserCreateComponent implements OnInit {
     });
   }
 
-  // Manage the submit action and create the new product.
+  // Manage the submit action and create the new user.
   onSignup() {
       const user = new User(
       this.userSignupForm.value['s_username'],

@@ -12,6 +12,7 @@ import { UserComponent } from './user/user/user.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { ProductShoppingCartComponent } from './product/product-shoppingcart/product-shoppingcart.component';
 import { UserCreateComponent } from './user/user-create/user-create.component';
+import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { UserCreateComponent } from './user/user-create/user-create.component';
     UserComponent,
     UserListComponent,
     ProductShoppingCartComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,

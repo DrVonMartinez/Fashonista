@@ -11,7 +11,7 @@ import { UserService } from 'src/app/entities/user/user.service';
 })
 export class UserComponent implements OnInit {
 
-  page = 'login'
+  page:string;
   user: User;
   shoppingcart: Array<IProduct> = [];
   error: boolean = false;
@@ -20,6 +20,7 @@ export class UserComponent implements OnInit {
   constructor(protected userService: UserService, protected formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.page = 'login';
   }
 
   loadProducts() {

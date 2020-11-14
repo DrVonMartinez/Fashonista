@@ -12,6 +12,7 @@ import { IUser } from './entities/user/user.model';
 export class AppComponent implements OnInit {
   title = 'Fashionista';
   status = 'DOWN';
+  page = 'admin';
   createdProduct: IProduct = null;
   addedUser: IUser = null;
 

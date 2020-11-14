@@ -298,7 +298,7 @@
 </div>
 
 <!--Confirm Server is running-->
-<div class="content" role="main">
+<div class="content">
   <div *ngIf='status == "DOWN"'>
     <h1 style='color: red;'>HTTP 500 - Internal Server Error</h1>
     <h2 style='color: red;'>Server is {{status}}</h2>
@@ -306,13 +306,24 @@
   <router-outlet></router-outlet>
 </div>
 <div class="container row" *ngIf='status == "UP"'>
-  <div class="col-lg-6">
-    <app-product-list [productToDisplay]="createdProduct"></app-product-list>
-    <app-user-list [userToDisplay]="addedUser"></app-user-list>
+  <div *ngIf='page=="home"'>
+    <p>Home</p>
+    <nav>
+
+    </nav>
+
   </div>
-  <div class="col-lg-6">
-    <app-product-create (createdProduct)="onCreatedProduct($event)"></app-product-create>
-    <br>
-    <app-user (addedUser)="onAddedUser($event)"></app-user>
+  <div *ngIf='page=="admin"' class="horizontal-center vertical-center">
+    <app-admin></app-admin>
+  </div>
+  <div *ngIf='page=="other"'>
+    <div class="col-lg-6">
+      <app-product-list [productToDisplay]="createdProduct"></app-product-list>
+      <app-user-list [userToDisplay]="addedUser"></app-user-list>
+    </div>
+    <div class="col-lg-6">
+      <app-product-create (createdProduct)="onCreatedProduct($event)"></app-product-create>
+      <app-user (addedUser)="onAddedUser($event)"></app-user>
+    </div>
   </div>
 </div>
