@@ -1,4 +1,4 @@
-<div class="row" *ngIf="admin">
+<div *ngIf="admin">
     <div class="col-6 text-right">
         <h2>Admin Portal</h2>
         <h3>Welcome {{admin.name}}</h3>
@@ -22,6 +22,6 @@
         </div>
     </div>
 </div>
-<div class="row" *ngIf="!admin">
+<div *ngIf="!admin">
     <app-admin-login (loggedInUser)="onLogin($event)"></app-admin-login>
 </div>

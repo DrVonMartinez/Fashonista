@@ -17,11 +17,12 @@ export class AppComponent implements OnInit {
   addedUser: IUser = null;
 
   constructor(protected statusService: StatusService) { 
-    this.page = 'user'
+    
   }
 
   // Get the server status when starting the view.
   ngOnInit() {
+    this.page = 'home'
     this.statusService
       .getStatus()
       .then((result: any) => {
