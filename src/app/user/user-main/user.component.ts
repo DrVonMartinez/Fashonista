@@ -41,6 +41,7 @@ export class UserComponent implements OnInit {
 
   onLogin(user: User){
     this.user = user;
+    this.page = 'products'
     this.loggedInUser.emit(user);
   }
 

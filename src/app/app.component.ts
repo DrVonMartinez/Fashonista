@@ -12,11 +12,13 @@ import { IUser } from './entities/user/user.model';
 export class AppComponent implements OnInit {
   title = 'Fashionista';
   status = 'DOWN';
-  page = 'admin';
+  page: string;
   createdProduct: IProduct = null;
   addedUser: IUser = null;
 
-  constructor(protected statusService: StatusService) { }
+  constructor(protected statusService: StatusService) { 
+    this.page = 'user'
+  }
 
   // Get the server status when starting the view.
   ngOnInit() {

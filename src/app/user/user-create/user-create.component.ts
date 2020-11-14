@@ -14,10 +14,11 @@ export class UserCreateComponent implements OnInit {
   userSignupForm: FormGroup;
 
   @Output() loggedInUser = new EventEmitter<IUser>();
-  l_username: string = ''; 
+  l_username: string = '';
   l_password: string = '';
-  s_username: string = ''; 
+  s_username: string = '';
   s_password: string = '';
+  s_password2: string = '';
   error: boolean = false;
   constructor(protected userService: UserService, protected formBuilder: FormBuilder) { }
 
@@ -34,6 +35,7 @@ export class UserCreateComponent implements OnInit {
     this.userService.login(user).then((result: IUser) => {
       if (result === undefined) {
         this.error = true;
+        alert("Login Failed")
       } else {
         this.error = false;
         this.loggedInUser.emit(result);
@@ -43,19 +45,26 @@ export class UserCreateComponent implements OnInit {
 
   // Manage the submit action and create the new user.
   onSignup() {
+    if (this.userSignupForm.value['s_password'] !== this.userSignupForm.value['s_password2']) {
+      this.error = true;
+      alert('Passwords must match')
+    }
+    else {
       const user = new User(
-      this.userSignupForm.value['s_username'],
-      this.userSignupForm.value['s_password'],
-      [],
-      null);
-    this.userService.create(user).then((result: IUser) => {
-      if (result === undefined) {
-        this.error = true;
-      } else {
-        this.error = false;
-        this.loggedInUser.emit(result);
-      }
-    });
+        this.userSignupForm.value['s_username'],
+        this.userSignupForm.value['s_password'],
+        [],
+        null);
+      this.userService.create(user).then((result: IUser) => {
+        if (result === undefined) {
+          this.error = true;
+          alert('Username already taken')
+        } else {
+          this.error = false;
+          this.loggedInUser.emit(result);
+        }
+      });
+    }
   }
 
   // Init the login form.
@@ -71,6 +80,7 @@ export class UserCreateComponent implements OnInit {
     this.userSignupForm = new FormGroup({
       s_username: new FormControl(this.s_username, Validators.required),
       s_password: new FormControl(this.s_password, Validators.required),
+      s_password2: new FormControl(this.s_password2, Validators.required)
     });
   }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { IUser, User, Admin } from './user.model';
-import {ProductService} from '../product/product.service';
+import { ProductService } from '../product/product.service';
 import { IProduct } from '../product/product.model';
 
 
@@ -12,7 +12,7 @@ export class UserService {
     private userUrl = '/api/user';
     private adminUrl = '/api/admin';
 
-    constructor(private http: Http, private productService:ProductService) { }
+    constructor(private http: Http, private productService: ProductService) { }
 
     getAdmins(): Promise<Array<IUser>> {
         return this.http.get(this.adminUrl)
@@ -30,11 +30,34 @@ export class UserService {
     }
 
     // Enroll user
-    create(user: User): Promise<IUser> {
-        return this.http.post(this.userUrl, user)
-            .toPromise()
-            .then(response => response.json())
-            .catch(this.error);
+    async create(user: User): Promise<IUser> {
+        let found: boolean = false
+        if (!found) {
+            // Confirm username is not used by admin
+            let admins = await this.getAdmins()
+            admins.forEach(function (admin) {
+                let namecheck = admin.name === user.name;
+                if (namecheck) {
+                    found = true;
+                }
+            })
+        }
+        if (!found) {
+            // Confirm username is not used by admin
+            let users = await this.get()
+            users.forEach(function (check) {
+                let namecheck = check.name === user.name;
+                if (namecheck) {
+                    found = true;
+                }
+            })
+        }
+        if (!found) {
+            return this.http.post(this.userUrl, user)
+                .toPromise()
+                .then(response => response.json())
+                .catch(this.error);
+        }
     }
 
     // Delete a user
@@ -61,30 +84,30 @@ export class UserService {
 
     async login(account: IUser): Promise<IUser> {
         var find_account: IUser
-        if(account.role === 'admin'){
+        if (account.role === 'admin') {
             let accounts = await this.getAdmins()
-            accounts.forEach(function(admin){
+            accounts.forEach(function (admin) {
                 let namecheck = admin.name === account.name;
                 let passwordcheck = admin.password === account.password;
-                if(namecheck && passwordcheck){
+                if (namecheck && passwordcheck) {
                     find_account = admin;
                 }
             })
         }
-        else{
+        else {
             let accounts = await this.get()
-            accounts.forEach(function(user){
+            accounts.forEach(function (user) {
                 let namecheck = user.name === account.name;
                 let passwordcheck = user.password === account.password;
-                if(namecheck && passwordcheck){
+                if (namecheck && passwordcheck) {
                     find_account = user;
                 }
             })
         }
         return find_account;
-        
-        
-        
+
+
+
     }
 
     // Error handling
@@ -96,7 +119,7 @@ export class UserService {
 
 
     addToCart(id: string, productId: string): Promise<any> {
-        let user = this.getUser(id).then(function(result){
+        let user = this.getUser(id).then(function (result) {
             result.shoppingCart.push(this.productService.getProduct(productId));
         });
         return this.http.put(`${this.userUrl}/${id}`, user)
@@ -105,8 +128,8 @@ export class UserService {
             .catch(this.error);
     }
 
-    removeFromCart(id: string, productId: string): Promise<any>  {
-        let user = this.getUser(id).then(function(result){
+    removeFromCart(id: string, productId: string): Promise<any> {
+        let user = this.getUser(id).then(function (result) {
             let product = this.productService.getProduct(productId)
             let index = result.shoppingCart.indexOf(product)
             result.shoppingCart.splice(index, 1);
@@ -118,7 +141,7 @@ export class UserService {
     }
 
     completePurchase(id: string): Promise<any> {
-        let user = this.getUser(id).then(function(result){
+        let user = this.getUser(id).then(function (result) {
             result.shoppingCart = [];
         });
         return this.http.put(`${this.userUrl}/${id}`, user)
