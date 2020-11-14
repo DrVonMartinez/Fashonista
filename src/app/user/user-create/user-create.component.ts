@@ -74,4 +74,8 @@ export class UserCreateComponent implements OnInit {
     });
   }
 
+  // Hide the error message.
+  hideError() {
+    this.error = false;
+  }
 }

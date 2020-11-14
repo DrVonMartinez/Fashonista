@@ -37,10 +37,16 @@ export class AdminLoginComponent implements OnInit {
     this.adminService.login(user).then((result: IUser) => {
       if (result === undefined) {
         this.error = true;
+        alert("Login Failed")
       } else {
         this.error = false;
         this.loggedInUser.emit(result);
       }
     });
+  }
+
+  // Hide the error message.
+  hideError() {
+    this.error = false;
   }
 }
