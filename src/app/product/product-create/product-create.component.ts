@@ -29,21 +29,36 @@ export class ProductCreateComponent implements OnInit {
 
   // Manage the submit action and create the new product.
   onSubmit() {
-    const product = new Product(
-      this.productForm.value['name'],
-      this.productForm.value['brand'],
-      this.productForm.value['image'],
-      this.productForm.value['price'],
-      this.productForm.value['category'], 
-      null);
-    this.productService.create(product).then((result: IProduct) => {
-      if (result === undefined) {
-        this.error = true;
-      } else {
-        this.error = false;
-        this.createdProduct.emit(result);
-      }
-    });
+    this.hideError()
+    let price_value: number;
+    try {
+      price_value = Number(this.price)
+    }
+    catch {
+      this.error = true;
+    }
+    if (!this.error) {
+      const product = new Product(
+        this.productForm.value['name'],
+        this.productForm.value['brand'],
+        this.productForm.value['image'],
+        price_value,
+        this.productForm.value['category'],
+        null);
+      this.productService.create(product).then((result: IProduct) => {
+        if (result === undefined) {
+          this.error = true;
+        } else {
+          this.error = false;
+          this.name = '';
+          this.brand = '';
+          this.image = '';
+          this.price = '';
+          this.category = '';
+          this.createdProduct.emit(result);
+        }
+      });
+    }
   }
 
   // Hide the error message.

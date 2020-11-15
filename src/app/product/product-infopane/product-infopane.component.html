@@ -1,5 +1,23 @@
-<div ngFor="let product of frames" >
-    <div class="carousel-item">
-        <img src="product.image" class="d-block" alt="product.name">
+<style>
+    .image {
+        width: 100px;
+        height: 100px;
+        border: 5px dashed #f7a239;
+    }
+    img {
+        width: 900px;
+        height: 600px;
+    }
+</style>
+<div *ngIf="products.length > 0">
+    <div class="images">
+        <button class="btn" (click)="previous()">Previous</button>
+        <img [alt]="products[frame].name" [src]="products[frame].image" />
+        <button class="btn" (click)="next()">Next</button>
     </div>
+</div>
+<div *ngIf="products.length === 0" class="alert alert-info" role="info">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Information:</span>
+    The product collection is empty.
 </div>

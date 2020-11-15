@@ -2,6 +2,7 @@ export interface IProduct {
   _id?: string;
   name: string;
   brand: string;
+  image: string;
 }
 
 export class Product implements IProduct {
@@ -9,7 +10,7 @@ export class Product implements IProduct {
     public name: string,
     public brand: string,
     public image: string,
-    public price: string,
+    public price: number,
     public category: string,
     public _id?: string
   ) {

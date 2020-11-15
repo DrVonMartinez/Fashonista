@@ -1,3 +1,14 @@
+<style>
+    .image {
+        width: 100px;
+        height: 100px;
+        border: 5px dashed #f7a239;
+    }
+    img {
+        width: 750px;
+        height: 500px;
+    }
+</style>
 <div class="row" *ngIf="user">
     <div class="col-6 text-right">
         <h2>User Portal</h2>
@@ -7,13 +18,23 @@
         <button class="btn btn-danger" (click)="page = logout()">Logout</button>
     </div>
     <div class="container row" *ngIf="page == 'shop'">
-        <div class="col-md-12">
-            <app-product-list [productToDisplay]="loadProducts()"></app-product-list>
+        <div *ngIf="products.length > 0">
+            <div class="images">
+                <button class="btn" (click)="previous()">Previous</button>
+                <img [alt]="products[frame].name" [src]="products[frame].image" />
+                <button class="btn" (click)="next()">Next</button>
+            </div>
+            <button class="btn" (click)="cart()">Add to Cart</button>
+        </div>
+        <div *ngIf="products.length === 0" class="alert alert-info" role="info">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Information:</span>
+            The product collection is empty.
         </div>
     </div>
     <div class="container row" *ngIf="page === 'checkout'">
         <div class="col-md-12">
-            <app-product-shoppingcart [cartToDisplay]="shoppingcart"></app-product-shoppingcart>
+            <app-product-shoppingcart></app-product-shoppingcart>
         </div>
     </div>
 </div>
