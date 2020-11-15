@@ -18,7 +18,7 @@ export class ProductService {
             .catch(this.error);
     }
 
-    getProduct(id: string): Promise<IProduct>{
+    getProduct(id: string): Promise<IProduct> {
         return this.http.get(`${this.productsUrl}/${id}`)
             .toPromise()
             .then(response => response.json())
@@ -26,11 +26,25 @@ export class ProductService {
     }
 
     // Create product
-    create(product: Product): Promise<IProduct> {
-        return this.http.post(this.productsUrl, product)
-            .toPromise()
-            .then(response => response.json())
-            .catch(this.error);
+    async create(product: Product): Promise<IProduct> {
+        let found: boolean = false
+        if (!found) {
+            // Confirm username is not used by admin
+            let products = await this.get()
+            products.forEach(function (product_i) {
+                let namecheck = product.name === product_i.name;
+                let brandcheck = product.brand === product_i.brand;
+                if (namecheck && brandcheck) {
+                    found = true;
+                }
+            })
+        }
+        if (!found) {
+            return this.http.post(this.productsUrl, product)
+                .toPromise()
+                .then(response => response.json())
+                .catch(this.error);
+        }
     }
 
     // Delete a product
