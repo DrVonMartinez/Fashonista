@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { IUser, User, Admin } from './user.model';
 import { ProductService } from '../product/product.service';
-import { IProduct } from '../product/product.model';
+import { IProduct, Product } from '../product/product.model';
 
 
 @Injectable({
@@ -118,33 +118,26 @@ export class UserService {
     }
 
 
-    addToCart(id: string, productId: string): Promise<any> {
-        let user = this.getUser(id).then(function (result) {
-            result.shoppingCart.push(this.productService.getProduct(productId));
-        });
-        return this.http.put(`${this.userUrl}/${id}`, user)
+    addToCart(user: User, product:Product): Promise<User> {
+        user.shoppingCart.push(product);
+        return this.http.put(`${this.userUrl}/${user._id}`, user)
             .toPromise()
             .then(response => response.json())
             .catch(this.error);
     }
 
-    removeFromCart(id: string, productId: string): Promise<any> {
-        let user = this.getUser(id).then(function (result) {
-            let product = this.productService.getProduct(productId)
-            let index = result.shoppingCart.indexOf(product)
-            result.shoppingCart.splice(index, 1);
-        });
-        return this.http.put(`${this.userUrl}/${id}`, user)
+    removeFromCart(user: User, product:Product): Promise<User> {
+        let index = user.shoppingCart.indexOf(product)
+        user.shoppingCart.splice(index, 1);
+        return this.http.put(`${this.userUrl}/${user._id}`, user)
             .toPromise()
             .then(response => response.json())
             .catch(this.error);
     }
 
-    completePurchase(id: string): Promise<any> {
-        let user = this.getUser(id).then(function (result) {
-            result.shoppingCart = [];
-        });
-        return this.http.put(`${this.userUrl}/${id}`, user)
+    completePurchase(user: User): Promise<User> {
+        user.shoppingCart = [];
+        return this.http.put(`${this.userUrl}/${user._id}`, user)
             .toPromise()
             .then(response => response.json())
             .catch(this.error);

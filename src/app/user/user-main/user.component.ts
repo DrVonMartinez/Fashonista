@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IProduct } from 'src/app/entities/product/product.model';
+import { IProduct, Product } from 'src/app/entities/product/product.model';
 import { ProductService } from 'src/app/entities/product/product.service';
 import { IUser, User } from 'src/app/entities/user/user.model';
 import { UserService } from 'src/app/entities/user/user.service';
@@ -18,7 +18,7 @@ export class UserComponent implements OnInit {
   error: boolean = false;
   products: Array<IProduct> = [];
   frame: number;
-
+  @Input() cartToDisplay: IProduct = null;
   @Output() loggedInUser = new EventEmitter<IUser>();
   constructor(protected userService: UserService, protected formBuilder: FormBuilder, private productService: ProductService) { }
 
@@ -26,6 +26,7 @@ export class UserComponent implements OnInit {
     this.user = undefined
     this.page = 'login';
   }
+
 
   // Hide the error message.
   hideError() {
@@ -51,6 +52,7 @@ export class UserComponent implements OnInit {
     if (this.user) {
       this.user.shoppingCart.push(this.products[this.frame])
     }
+    alert(this.products[this.frame].name + ' added to cart')
   }
 
   next() {
@@ -78,6 +80,34 @@ export class UserComponent implements OnInit {
       .then((result: Array<IProduct>) => {
         this.products = result;
       });
+  }
+
+  // Delete a product. 
+  delete(id: string) {
+    let product: Product;
+    let found = false;
+    this.products.forEach(function(product_i: Product){
+      if (!found && (product_i._id===id)){
+        found = true;
+        product = product_i;
+      }
+
+    })
+    this.userService.removeFromCart(this.user, product).then((result: any) => this.loadCart());
+  }
+
+  // Load all products.
+  private loadCart() {
+    this.userService
+      .getUser(this.user._id)
+      .then(function(result: User){
+        this.shoppingCart = result.shoppingCart
+      });
+  }
+
+  checkout(){
+    this.userService.completePurchase(this.user).then((result: any) => this.loadCart());
+    alert('Transaction Successful')
   }
 
 }

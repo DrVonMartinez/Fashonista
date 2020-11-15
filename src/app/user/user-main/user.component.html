@@ -4,20 +4,21 @@
         height: 100px;
         border: 5px dashed #f7a239;
     }
+
     img {
         width: 750px;
         height: 500px;
     }
 </style>
-<div class="row" *ngIf="user">
-    <div class="col-6 text-right">
+<div *ngIf="user">
+    <div class="text-right align-right">
         <h2>User Portal</h2>
         <h3>Welcome {{user.name}}</h3>
-        <button class="btn btn-warning" (click)="page = 'shop'">Shop</button>
-        <button class="btn btn-info" (click)="page = 'checkout'">Checkout</button>
+        <button *ngIf='page != "shop"' class="btn btn-warning" (click)="page = 'shop'">Shop</button>
+        <button *ngIf='page != "checkout"' class="btn btn-info" (click)="page = 'checkout'">Checkout</button>
         <button class="btn btn-danger" (click)="page = logout()">Logout</button>
     </div>
-    <div class="container row" *ngIf="page == 'shop'">
+    <div class="container" *ngIf="page == 'shop'">
         <div *ngIf="products.length > 0">
             <div class="images">
                 <button class="btn" (click)="previous()">Previous</button>
@@ -32,9 +33,32 @@
             The product collection is empty.
         </div>
     </div>
-    <div class="container row" *ngIf="page === 'checkout'">
-        <div class="col-md-12">
-            <app-product-shoppingcart></app-product-shoppingcart>
+    <div class="container" *ngIf="page === 'checkout'">
+        <h4>Cart:</h4>
+        <div *ngIf="user.shoppingCart.length > 0">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cart_item of user.shoppingCart">
+                        <td>{{ cart_item.name }}</td>
+                        <td>{{ cart_item.brand }}</td>
+                        <td> <a class="delete" (click)="delete(cart_item._id)">Remove</a> </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-info" (click)="checkout()">Checkout</button>
+        </div>
+
+        <div *ngIf="user.shoppingCart.length === 0" class="alert alert-info" role="info">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Information:</span>
+            The cart is empty.
         </div>
     </div>
 </div>
